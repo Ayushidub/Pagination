@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import "./Pagination.css"; 
 
+// Updated items array with image URLs (using placeholder images)
 const items = Array.from({ length: 50 }, (_, i) => ({
   id: i + 1,
   name: `Item ${i + 1}`,
-  description:`Description for item ${i + 1}`
+  description: `Description for item ${i + 1}`,
+  image: `https://picsum.photos/300/300?random=${i + 1}` // Random placeholder images
 }));
-const itemsPerPage = 10;
+const itemsPerPage = 12; // Changed to 12 for better grid layout (3x4 or 4x3)
 
 const Pagination = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -73,45 +75,47 @@ const Pagination = () => {
 
       <AnimatePresence mode="wait">
         {isLoading ? (
-          <div className="list">
+          <div className="grid-container">
             {Array.from({ length: itemsPerPage }).map((_, index) => (
               <div
                 key={index}
-                className="list-item loading-shimmer"
-                style={{ height: '60px' }}
+                className="grid-item loading-shimmer"
               />
             ))}
           </div>
         ) : (
-          <motion.ul
+          <motion.div
             key={currentPage}
-            className="list"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
+            className="grid-container"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
             {paginatedItems.map((item, index) => (
-              <motion.li
+              <motion.div
                 key={item.id}
-                className="list-item"
+                className="grid-item"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.2, delay: index * 0.05 }}
+                whileHover={{ scale: 1.03 }}
               >
-                <div>
+                <div className="item-image-container">
+                  <img 
+                    src={item.image} 
+                    alt={item.name}
+                    className="item-image"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="item-content">
                   <h3>{item.name}</h3>
                   <p className="text-secondary">{item.description}</p>
                 </div>
-                <motion.div
-                  whileHover={{ scale: 1.1 }}
-                  className="arrow"
-                >
-                  →
-                </motion.div>
-              </motion.li>
+              </motion.div>
             ))}
-          </motion.ul>
+          </motion.div>
         )}
       </AnimatePresence>
 
