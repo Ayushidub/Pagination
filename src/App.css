@@ -1,0 +1,11 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: rgb(34, 14, 123);
+}
+body,html{
+  background-image: url("https://tse3.mm.bing.net/th?id=OIP.6Upb1bYF5NFAKJpfn6pCnwHaDS&pid=Api&P=0&h=180");
+  background-size: cover;
+}
